@@ -2,7 +2,23 @@ import { createSlice } from '@reduxjs/toolkit';
 import {getRegionEfficiency} from "./efficiencyThunk.js";
 
 const initialState = {
-    regionEfficiency: [],
+    regionEfficiency: [
+        {
+            pS: '2',
+            oneDay: "3,5",
+            week: "17.5",
+            TP: '19',
+            AVR: "2",
+            dismantling: '10',
+            region: 'Чуй',
+            square: "Юг",
+            build: '1',
+            connection: "15",
+            sale: '5',
+            point: '14',
+            efficiency: 85,
+        }
+    ],
     regionEfficiencyLoading: false,
 };
 
@@ -18,7 +34,7 @@ const EfficiencySlice = createSlice({
             state.regionEfficiency = res;
             state.regionEfficiencyLoading = false;
         });
-        builder.addCase(getRegionEfficiency.rejected, (state, { payload: error }) => {
+        builder.addCase(getRegionEfficiency.rejected, (state) => {
             state.regionEfficiencyLoading = false;
         });
     },
