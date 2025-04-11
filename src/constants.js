@@ -1,1 +1,1 @@
-export const API_URL = 'https://pp.skynet.kg/api/v2';
+export const API_URL = 'https://pp.skynet.kg/api';

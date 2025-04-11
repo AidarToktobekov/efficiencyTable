@@ -1,11 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import axios, {isAxiosError} from "axios";
+import {isAxiosError} from "axios";
+import axiosApi from "../../axiosApi.js";
 
 export const login = createAsyncThunk(
   'user/login',
   async (user, { rejectWithValue }) => {
     try {
-        const { data: req } = await axios.post('https://pp.skynet.kg/api/accounts/token/', {
+        const { data: req } = await axiosApi.post('/accounts/token/', {
             username: user.username,
             password: user.password
         });

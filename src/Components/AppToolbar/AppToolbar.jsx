@@ -26,7 +26,7 @@ const AppToolbar = () => {
                                 fontFamily: 'Jura',
                                 fontSize: '24px'
                             }}>
-                                {user.username}
+                                {user?.username || ""}
                             </Typography>
                             <Button onClick={handleLogout} variant={"contained"} color="error">
                                 Выйти

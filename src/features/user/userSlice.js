@@ -28,7 +28,6 @@ const UsersSlice = createSlice({
       state.loginError = null;
     });
     builder.addCase(login.fulfilled, (state, { payload: res }) => {
-      console.log(res)
       state.user = {
         id: res.id,
         username: res.username,

@@ -11,8 +11,7 @@ export const getRegionEfficiency = createAsyncThunk(
             const formattedDateCreatedAt = `${dayCreatedAt}-${monthCreatedAt}-${yearCreatedAt}`;
             const formattedDateFinishedAt = `${dayFinishedAt}-${monthFinishedAt}-${yearFinishedAt}`;
 
-            console.log(formattedDateCreatedAt, formattedDateFinishedAt);
-            const {data: req} = await axiosApi.get(`/efficiency?date_from=${formattedDateCreatedAt}&date_to=${formattedDateFinishedAt}`);
+            const {data: req} = await axiosApi.get(`/v2/efficiency?date_from=${formattedDateCreatedAt}&date_to=${formattedDateFinishedAt}`);
 
             return req;
         }catch (error){

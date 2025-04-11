@@ -1,16 +1,15 @@
 import {Container} from "@mui/material";
 import AppToolbar from "../AppToolbar/AppToolbar.jsx";
 import Footer from "../Footer/Footer.jsx";
+import {useLocation} from "react-router-dom";
 
 const Layout = ({ children }) => {
-
-    const onExcludedPage =
-        location.pathname.includes("/sign-in");
+    const {pathname} = useLocation();
 
     return(
         <>
             <header>
-                {onExcludedPage ? <></> : <AppToolbar/>}
+                {pathname !== "/sign-in" && <AppToolbar/>}
             </header>
             <Container
                 maxWidth={false}

@@ -15,7 +15,6 @@ const EfficiencySlice = createSlice({
             state.regionEfficiencyLoading = true;
         });
         builder.addCase(getRegionEfficiency.fulfilled, (state, { payload: res }) => {
-            console.log()
             state.regionEfficiency = res;
             state.regionEfficiencyLoading = false;
         });
