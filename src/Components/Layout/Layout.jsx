@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
     return(
         <>
             <header>
-                {/*{onExcludedPage ? <></> : <AppToolbar/>}*/}
+                {onExcludedPage ? <></> : <AppToolbar/>}
             </header>
             <Container
                 maxWidth={false}

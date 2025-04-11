@@ -28,13 +28,15 @@ const UsersSlice = createSlice({
       state.loginError = null;
     });
     builder.addCase(login.fulfilled, (state, { payload: res }) => {
+      console.log(res)
       state.user = {
+        id: res.id,
         username: res.username,
-        name: res.full_name,
+        full_name: res.full_name,
         role: res.role,
-        sip: res.sip,
-        phone_number: res.phone_number,
-        token: res.token,
+        square_ids: res.square_ids,
+        token: res.access,
+        refresh: res.refresh,
       };
       state.loginLoading = false;
     });
