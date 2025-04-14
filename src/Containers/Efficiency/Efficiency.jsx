@@ -24,6 +24,7 @@ import {selectRegionEfficiency, selectRegionEfficiencyLoading} from "../../featu
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Logo from "../../../public/logo.png";
+import { ResponsivePie } from '@nivo/pie'
 
 const Efficiency = ()=>{
 
@@ -224,51 +225,174 @@ const Efficiency = ()=>{
                                                                     {efficiency.squares.map((square, i) => (
                                                                         <TableRow key={i}>
                                                                             <TableCell align={"center"} sx={{
-                                                                                border: '1px solid #ddd'
+                                                                                border: '1px solid #ddd',
+                                                                                fontFamily: 'Jura',
+                                                                                fontWeight: '900',
+                                                                                fontSize: '18px'
                                                                             }}>
+                                                                                <Grid sx={{
+                                                                                    background: '#fff',
+                                                                                    borderRadius: '10px',
+                                                                                    p: 1,
+                                                                                }}>
+
                                                                                 {square.square}
-                                                                            </TableCell>
-                                                                            <TableCell align={"center"} sx={{
-                                                                                border: '1px solid #ddd'
-                                                                            }}>
-                                                                                <List>
-                                                                                    {square.data.works.map((work, i)=>(
-                                                                                        <ListItem key={i}>
-                                                                                            {work.work_type} - {work.amount}
-                                                                                        </ListItem>
-                                                                                    ))}
-                                                                                </List>
-                                                                            </TableCell>
-                                                                            <TableCell align={"center"} sx={{
-                                                                                border: '1px solid #ddd'
-                                                                            }}>
-                                                                                {square.data.physical_force}
-                                                                            </TableCell>
-                                                                            <TableCell align={"center"} sx={{
-                                                                                border: '1px solid #ddd'
-                                                                            }}>
-                                                                                {square.data.one_day_norm}
-                                                                            </TableCell>
-                                                                            <TableCell align={"center"} sx={{
-                                                                                border: '1px solid #ddd'
-                                                                            }}>
-                                                                                {square.data.request_days_norm}
-                                                                            </TableCell>
-                                                                            <TableCell align={"center"} sx={{
-                                                                                border: '1px solid #ddd'
-                                                                            }}>
-                                                                                {square.data.points_sum}
+                                                                                </Grid>
                                                                             </TableCell>
                                                                             <TableCell align={"center"} sx={{
                                                                                 border: '1px solid #ddd',
-                                                                                color: square.data.efficiency_percentage > 60 ?
-                                                                                    square.data.efficiency_percentage > 80 ?
-                                                                                        square.data.efficiency_percentage > 90 ?
-                                                                                            "#00b30f" : "#ff8f00"
-                                                                                        : "#efc700"
-                                                                                    : '#ff0000',
+                                                                                fontFamily: 'Jura',
+                                                                                fontWeight: '900',
+                                                                                fontSize: '18px'
                                                                             }}>
-                                                                                {square.data.efficiency_percentage}%
+                                                                                <Grid sx={{
+                                                                                    background: '#fff',
+                                                                                    borderRadius: '10px',
+                                                                                    p: 1,
+                                                                                }}>
+                                                                                    <List>
+                                                                                        {square.data.works.map((work, i)=>(
+                                                                                            <ListItem key={i} sx={{
+                                                                                                width: 'fit-content',
+                                                                                                display: 'inline-block',
+                                                                                                p: 0,
+                                                                                            }}>
+                                                                                                {work.work_type} - {work.amount}
+                                                                                            </ListItem>
+                                                                                        ))}
+                                                                                    </List>
+                                                                                </Grid>
+                                                                            </TableCell>
+                                                                            <TableCell align={"center"} sx={{
+                                                                                border: '1px solid #ddd',
+                                                                                fontFamily: 'Jura',
+                                                                                fontWeight: '900',
+                                                                                fontSize: '18px'
+                                                                            }}>
+                                                                                <Grid sx={{
+                                                                                    background: '#fff',
+                                                                                    borderRadius: '10px',
+                                                                                    p: 1,
+                                                                                }}>
+                                                                                    {square.data.physical_force}
+                                                                                </Grid>
+                                                                            </TableCell>
+                                                                            <TableCell align={"center"} sx={{
+                                                                                border: '1px solid #ddd',
+                                                                                fontFamily: 'Jura',
+                                                                                fontWeight: '900',
+                                                                                fontSize: '18px'
+                                                                            }}>
+                                                                                <Grid sx={{
+                                                                                    background: '#fff',
+                                                                                    borderRadius: '10px',
+                                                                                    p: 1,
+                                                                                }}>
+                                                                                    {square.data.one_day_norm}
+                                                                                </Grid>
+                                                                            </TableCell>
+                                                                            <TableCell align={"center"} sx={{
+                                                                                border: '1px solid #ddd',
+                                                                                fontFamily: 'Jura',
+                                                                                fontWeight: '900',
+                                                                                fontSize: '18px'
+                                                                            }}>
+                                                                                <Grid sx={{
+                                                                                    background: '#fff',
+                                                                                    borderRadius: '10px',
+                                                                                    p: 1,
+                                                                                }}>
+                                                                                    {square.data.request_days_norm}
+                                                                                </Grid>
+                                                                            </TableCell>
+                                                                            <TableCell align={"center"} sx={{
+                                                                                border: '1px solid #ddd',
+                                                                                fontFamily: 'Jura',
+                                                                                fontWeight: '900',
+                                                                                fontSize: '18px'
+                                                                            }}>
+                                                                                <Grid sx={{
+                                                                                    background: '#fff',
+                                                                                    borderRadius: '10px',
+                                                                                    p: 1,
+                                                                                }}>
+                                                                                    {square.data.points_sum}
+                                                                                </Grid>
+                                                                            </TableCell>
+                                                                            <TableCell align={"center"} sx={{
+                                                                                border: '1px solid #ddd',
+                                                                            }}>
+                                                                                <Grid sx={{
+                                                                                    width: '120px',
+                                                                                    height: '120px',
+                                                                                    background: '#fff',
+                                                                                    borderRadius: '10px',
+                                                                                    position: 'relative',
+                                                                                    margin: "0 auto"
+                                                                                }}>
+                                                                                    <Typography sx={{
+                                                                                        position: 'absolute',
+                                                                                        left: '50%',
+                                                                                        top: '50%',
+                                                                                        transform: "translate(-50%, -50%)",
+                                                                                        fontFamily: 'Jura',
+                                                                                        fontWeight: '900',
+                                                                                        fontSize: '18px',
+                                                                                        color: square.data.efficiency_percentage > 60 ?
+                                                                                            square.data.efficiency_percentage > 80 ?
+                                                                                                square.data.efficiency_percentage > 90 ?
+                                                                                                    "#00b30f" : "#ff8f00"
+                                                                                                : "#efc700"
+                                                                                            : '#ff0000',
+                                                                                    }}>
+                                                                                        {square.data.efficiency_percentage}%
+                                                                                    </Typography>
+
+                                                                                    <ResponsivePie
+                                                                                        data={[
+                                                                                            {
+                                                                                                "id": "green", "label": "Эффективность", "value": square.data.efficiency_percentage,
+                                                                                            }, {
+                                                                                                "id": "red", "label": "", "value": 100 - square.data.efficiency_percentage,
+                                                                                            },
+                                                                                        ]}
+                                                                                        colors={['#1DBF12', '#E31A1A']}
+                                                                                        margin={{ top: 15, right: 0, bottom: 15, left: 0 }}
+                                                                                        height={120}
+                                                                                        innerRadius={0.6}
+                                                                                        cornerRadius={3}
+                                                                                        activeOuterRadiusOffset={8}
+                                                                                        arcLabelsTextColor='#FFFFFF'
+                                                                                        enableArcLabels={false}
+                                                                                        enableArcLinkLabels={false}
+                                                                                        tooltip={() => <div></div>}
+                                                                                        defs={[
+                                                                                            {
+                                                                                                id: 'lines',
+                                                                                                type: 'patternLines',
+                                                                                                background: 'inherit',
+                                                                                                color: 'rgba(255, 255, 255, 0.3)',
+                                                                                                rotation: -45,
+                                                                                                lineWidth: 6,
+                                                                                                spacing: 10
+                                                                                            }
+                                                                                        ]}
+                                                                                        fill={[
+                                                                                            {
+                                                                                                match: {
+                                                                                                    id: 'green'
+                                                                                                },
+                                                                                                id: 'lines'
+                                                                                            },
+                                                                                            {
+                                                                                                match: {
+                                                                                                    id: 'red'
+                                                                                                },
+                                                                                                id: 'lines'
+                                                                                            },
+                                                                                        ]}
+                                                                                    />
+                                                                                </Grid>
                                                                             </TableCell>
                                                                         </TableRow>
                                                                     ))}
