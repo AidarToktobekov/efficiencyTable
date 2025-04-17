@@ -74,7 +74,7 @@ const Efficiency = ()=>{
                         fontWeight: 'bold',
                         marginY: 3
                     }}>
-                        Эффективность
+                        Эффективность СИ по Хозяину сети
                     </Typography>
                     <Grid container component={"form"} onSubmit={searchEfficiency} justifyContent={"center"} sx={{
                             margin: "20px auto"
