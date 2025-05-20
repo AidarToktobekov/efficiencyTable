@@ -2,8 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 import {getRegionEfficiency} from "./efficiencyThunk.js";
 
 const initialState = {
-    regionEfficiency: [],
+    regionEfficiency: {
+        date: 0,
+        data: []
+    },
     regionEfficiencyLoading: false,
+    regionEfficiencyError: null,
 };
 
 const EfficiencySlice = createSlice({
