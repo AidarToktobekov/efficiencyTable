@@ -1,4 +1,5 @@
 import {
+    Alert,
     Box,
     Button,
     Collapse,
@@ -18,7 +19,6 @@ import {
 import React, {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.js";
 import {getRegionEfficiency} from "../../features/efficiency/efficiencyThunk.js";
-import {selectRegionEfficiency, selectRegionEfficiencyLoading} from "../../features/efficiency/efficiencySlice.js";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Logo from "../../../public/logo.png";
@@ -27,8 +27,8 @@ import EfficiencyTableItem from "../../Components/EfficiencyTableItem/Efficiency
 const Efficiency = ()=>{
 
     const dispatch = useAppDispatch();
-    const regionEfficiency = useAppSelector(selectRegionEfficiency);
-    const loading = useAppSelector(selectRegionEfficiencyLoading);
+    const {regionEfficiency, regionEfficiencyLoading, regionEfficiencyError} = useAppSelector(state => state.efficiency);
+    console.log(regionEfficiencyError)
 
     const [dates, setDates] = useState({
         createdAt: null,
@@ -83,7 +83,7 @@ const Efficiency = ()=>{
                         <TextField required type={"date"} name="finishedAt" onChange={handleDateChange} sx={{
                             width: 'calc(45% - 16px)',
                         }}></TextField>
-                        <Button loading={loading} variant="contained" color="secondary" type="submit" sx={{
+                        <Button loading={regionEfficiencyLoading} variant="contained" color="secondary" type="submit" sx={{
                             width: 'calc(10%)',
                             fontSize: '18px'
                         }}>
@@ -129,6 +129,17 @@ const Efficiency = ()=>{
                                 </TableRow>
                             </TableHead>
                             <TableBody>
+                                {regionEfficiencyError ?
+                                    <TableRow>
+                                        <TableCell colSpan={2}>
+                                            <Alert variant="standard" severity="error" sx={{
+                                                justifyContent: 'center',
+                                            }}>
+                                                {regionEfficiencyError.message}
+                                            </Alert>
+                                        </TableCell>
+                                    </TableRow>
+                                    : null}
                                     {regionEfficiency.data.map((efficiency, i) => (
                                         <React.Fragment key={i}>
                                             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>

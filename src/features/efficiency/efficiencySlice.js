@@ -22,18 +22,11 @@ const EfficiencySlice = createSlice({
             state.regionEfficiency = res;
             state.regionEfficiencyLoading = false;
         });
-        builder.addCase(getRegionEfficiency.rejected, (state) => {
+        builder.addCase(getRegionEfficiency.rejected, (state, {payload: error}) => {
+            state.regionEfficiencyError = error;
             state.regionEfficiencyLoading = false;
         });
     },
-    selectors: {
-        selectRegionEfficiency: (state) => state.regionEfficiency,
-        selectRegionEfficiencyLoading: (state) => state.regionEfficiencyLoading,
-    }
 });
 
 export const efficiencyReducer = EfficiencySlice.reducer;
-export const {
-    selectRegionEfficiency,
-    selectRegionEfficiencyLoading,
-} = EfficiencySlice.selectors;
