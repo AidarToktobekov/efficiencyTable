@@ -12,42 +12,22 @@ const NORM_BY_FORCE = {
     7: 12.5,
     8: 14
 };
-const POINTS_MAP = {
-    'Техпод': 0.5,
-    'Подключение': 0.75,
-    'Подключение ЮР': 0.75,
-    'Демонтаж': 0.25,
-    'Проф': 1.5,
-    'Авария': 2,
-    'Возврат': 0.5,
-    'Продажа': 0.75,
-    'Стройка': 3.5,
-    'АВР обрыв': 2,
-};
 
-const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNorm, requestDaysNorm})=>{
+const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNorm, requestDaysNorm, pointsSum})=>{
 
     const [countSI, setCountSI] = useState(physicalForce);
     const [dayNorm, setDayNorm] = useState(oneDayNorm);
     const [daysNorm, setDaysNorm] = useState(requestDaysNorm);
     const [efficiencyPercentage, setEfficiencyPercentage] = useState(0);
 
-    const pointsSum = ()=>{
-        let worksSum = 0;
-        works.map(item=>{
-            worksSum = worksSum + POINTS_MAP[item.work_type] * item.amount;
-        });
-
-        return worksSum;
-    };
     useEffect(()=>{
         setDayNorm(NORM_BY_FORCE[countSI]);
         setDaysNorm(NORM_BY_FORCE[countSI] * daysCount);
     }, [countSI]);
 
     useEffect(()=>{
-        setEfficiencyPercentage(Math.ceil((pointsSum() / daysNorm) * 100));
-    }, [pointsSum(), daysNorm]);
+        setEfficiencyPercentage(Math.ceil((pointsSum / daysNorm) * 100));
+    }, [pointsSum, daysNorm]);
 
     return(
         <TableRow>
@@ -151,7 +131,7 @@ const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNo
                     borderRadius: '10px',
                     p: 1,
                 }}>
-                    {pointsSum()}
+                    {pointsSum}
                 </Grid>
             </TableCell>
             <TableCell align={"center"} sx={{
