@@ -15,14 +15,19 @@ const NORM_BY_FORCE = {
 
 const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNorm, requestDaysNorm, pointsSum})=>{
 
-    const [countSI, setCountSI] = useState(physicalForce);
-    const [dayNorm, setDayNorm] = useState(oneDayNorm);
-    const [daysNorm, setDaysNorm] = useState(requestDaysNorm);
+    const [countSI, setCountSI] = useState(0);
+    const [dayNorm, setDayNorm] = useState(0);
+    const [daysNorm, setDaysNorm] = useState(0);
     const [efficiencyPercentage, setEfficiencyPercentage] = useState(0);
 
     useEffect(()=>{
+    }, [physicalForce]);
+
+    useEffect(()=>{
+        setCountSI(physicalForce);
+        setDayNorm(oneDayNorm);
         setDaysNorm(requestDaysNorm);
-    }, [requestDaysNorm]);
+    }, [physicalForce, oneDayNorm, requestDaysNorm]);
 
     useEffect(()=>{
         setDayNorm(NORM_BY_FORCE[countSI]);
