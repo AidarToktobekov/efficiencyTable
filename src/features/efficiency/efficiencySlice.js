@@ -4,7 +4,7 @@ import {getRegionEfficiency} from "./efficiencyThunk.js";
 const initialState = {
     regionEfficiency: {
         date: 0,
-        data: []
+        data: [],
     },
     regionEfficiencyLoading: false,
     regionEfficiencyError: null,
@@ -19,7 +19,10 @@ const EfficiencySlice = createSlice({
             state.regionEfficiencyLoading = true;
         });
         builder.addCase(getRegionEfficiency.fulfilled, (state, { payload: res }) => {
-            state.regionEfficiency = res;
+            state.regionEfficiency = {
+                date: res.request_days,
+                data: res.data,
+            };
             state.regionEfficiencyLoading = false;
         });
         builder.addCase(getRegionEfficiency.rejected, (state, {payload: error}) => {

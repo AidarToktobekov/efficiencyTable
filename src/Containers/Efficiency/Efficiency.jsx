@@ -28,7 +28,6 @@ const Efficiency = ()=>{
 
     const dispatch = useAppDispatch();
     const {regionEfficiency, regionEfficiencyLoading, regionEfficiencyError} = useAppSelector(state => state.efficiency);
-    console.log(regionEfficiencyError)
 
     const [dates, setDates] = useState({
         createdAt: null,
