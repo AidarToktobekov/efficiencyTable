@@ -59,6 +59,7 @@ const Efficiency = ()=>{
         "Чуй": false,
     });
 
+
     return(
         <>
             <Grid>
@@ -134,7 +135,9 @@ const Efficiency = ()=>{
                                             <Alert variant="standard" severity="error" sx={{
                                                 justifyContent: 'center',
                                             }}>
-                                                {regionEfficiencyError.message}
+                                                {regionEfficiencyError.message ? regionEfficiencyError.message : null}
+                                                {regionEfficiencyError.non_field_errors ? regionEfficiencyError.non_field_errors : null}
+                                                {!regionEfficiencyError.message && !regionEfficiencyError.non_field_errors ? "Не известная ошибка!" : null}
                                             </Alert>
                                         </TableCell>
                                     </TableRow>
