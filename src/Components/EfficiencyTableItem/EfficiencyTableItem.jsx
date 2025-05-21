@@ -21,6 +21,10 @@ const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNo
     const [efficiencyPercentage, setEfficiencyPercentage] = useState(0);
 
     useEffect(()=>{
+        setDaysNorm(requestDaysNorm);
+    }, [requestDaysNorm]);
+
+    useEffect(()=>{
         setDayNorm(NORM_BY_FORCE[countSI]);
         setDaysNorm(NORM_BY_FORCE[countSI] * daysCount);
     }, [countSI]);
