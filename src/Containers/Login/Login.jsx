@@ -78,6 +78,16 @@ const Login = ()=> {
             >
                 Вход в систему
             </Typography>
+            <Grid
+                container
+                justifyContent='flex-end'
+            >
+                {!!error && error.message ?
+                    <Alert severity='error' sx={{width: '100%'}}>{error?.message}</Alert>
+                    :
+                    <Alert severity='error' sx={{width: '100%'}}>{error?.detail}</Alert>
+                }
+            </Grid>
             <TextField
                 id='username'
                 name='username'
@@ -116,12 +126,6 @@ const Login = ()=> {
             >
                 Логин
             </LoadingButton>
-            <Grid
-                container
-                justifyContent='flex-end'
-            >
-                {!!error && <Alert severity='error' sx={{width: '100%'}}>{error?.message}</Alert>}
-            </Grid>
         </Container>
     );
 };

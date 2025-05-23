@@ -13,7 +13,7 @@ const NORM_BY_FORCE = {
     8: 14
 };
 
-const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNorm, requestDaysNorm, pointsSum})=>{
+const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNorm, requestDaysNorm, pointsSum, createdTechpods})=>{
 
     const [countSI, setCountSI] = useState(0);
     const [dayNorm, setDayNorm] = useState(0);
@@ -127,6 +127,20 @@ const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNo
                     p: 1,
                 }}>
                     {daysNorm}
+                </Grid>
+            </TableCell>
+            <TableCell align={"center"} sx={{
+                border: '1px solid #ddd',
+                fontFamily: 'Jura',
+                fontWeight: '900',
+                fontSize: '18px'
+            }}>
+                <Grid sx={{
+                    background: '#fff',
+                    borderRadius: '10px',
+                    p: 1,
+                }}>
+                    {createdTechpods}
                 </Grid>
             </TableCell>
             <TableCell align={"center"} sx={{

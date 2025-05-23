@@ -225,6 +225,9 @@ const Efficiency = ()=>{
                                                                             </Typography>
                                                                         </TableCell>
                                                                         <TableCell>
+                                                                            Кол-во техподов
+                                                                        </TableCell>
+                                                                        <TableCell>
                                                                             Сумма баллов
                                                                         </TableCell>
                                                                         <TableCell>
@@ -235,6 +238,7 @@ const Efficiency = ()=>{
                                                                 <TableBody>
                                                                     {efficiency.squares.map((square, i) => (
                                                                         <EfficiencyTableItem
+                                                                            createdTechpods={square.data.created_techpods}
                                                                             daysCount={regionEfficiency.date}
                                                                             key={i}
                                                                             square={square.square}
