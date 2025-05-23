@@ -63,16 +63,45 @@ const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNo
                 <Grid sx={{
                     background: '#fff',
                     borderRadius: '10px',
-                    p: 1,
                 }}>
-                    <List>
+                    <List sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}>
                         {works.map((work, i)=>(
                             <ListItem key={i} sx={{
-                                width: 'fit-content',
-                                display: 'inline-block',
-                                p: 0,}}
+                                width: '100%',
+                                display: 'flex',
+                                height: '45px',
+                                maxWidth: '230px',
+                                "& > div": {
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }
+                            }}
                             >
-                                {work.work_type} - {work.amount}
+                                <Grid sx={{
+                                    p: '0 5px',
+                                    flexGrow: '1',
+                                    fontSize: '14px',
+                                    height: '100%',
+                                    background: 'rgba(255,204,204,0.87)',
+                                    maxWidth: '140px',
+                                    width: 'max-content',
+                                    borderRadius: '5px 0 0 5px',
+                                }}>
+                                    {work.work_type}
+                                </Grid>
+                                <Grid sx={{
+                                    minWidth: '40px',
+                                    height: '100%',
+                                    p: '0 5px',
+                                    borderRadius: '0 5px 5px 0',
+                                    background: 'rgba(217,204,255,0.87)'
+                                }}>
+                                    {work.amount}
+                                </Grid>
                             </ListItem>
                         ))}
                     </List>

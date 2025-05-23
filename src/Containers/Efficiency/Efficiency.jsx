@@ -63,7 +63,7 @@ const Efficiency = ()=>{
     return(
         <>
             <Grid>
-                <Container maxWidth={"lg"}>
+                <Container maxWidth={"xl"}>
                     <Typography variant="h1" sx={{
                         textAlign: "center",
                         fontSize: '48px',

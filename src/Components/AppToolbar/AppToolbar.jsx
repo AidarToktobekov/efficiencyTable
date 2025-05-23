@@ -18,7 +18,7 @@ const AppToolbar = () => {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position='static'>
                     <Toolbar>
-                        <Container maxWidth={"lg"} sx={{
+                        <Container maxWidth={"xl"} sx={{
                             display: "flex",
                             justifyContent: "space-between",
                         }}>
