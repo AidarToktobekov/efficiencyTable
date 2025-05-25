@@ -23,11 +23,13 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Logo from "../../../public/logo.png";
 import EfficiencyTableItem from "../../Components/EfficiencyTableItem/EfficiencyTableItem.jsx";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const Efficiency = ()=>{
 
     const dispatch = useAppDispatch();
     const {regionEfficiency, regionEfficiencyLoading, regionEfficiencyError} = useAppSelector(state => state.efficiency);
+    const [hovered, setHovered] = useState(false);
 
     const [dates, setDates] = useState({
         createdAt: null,
@@ -107,25 +109,82 @@ const Efficiency = ()=>{
                                         textAlign: 'center'
                                     }
                                 }}>
-                                    <TableCell sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        width: '120px',
-                                        height: '100%',
-                                    }}>
+                                    <TableCell
+                                        sx={{
+                                            width: '120px',
+                                            height: '100%',
+                                        }}
+                                    >
                                         <Grid
                                             container
                                             alignItems="center"
                                             justifyContent="center"
-                                            sx={{ height: '100%', maxWidth: '90px', width: '100%'}}
+                                            sx={{
+                                                height: '100%',
+                                                maxWidth: '90px',
+                                                width: '100%',
+                                            }}
                                         >
-                                            <img src={Logo} style={{ maxWidth: '100%', height: 'auto' }} alt="logo" />
+                                            <img
+                                                src={Logo}
+                                                alt="logo"
+                                                style={{ display: "block", width: '90px', height: 'auto' }}
+                                            />
                                         </Grid>
                                     </TableCell>
                                     <TableCell colSpan={2} sx={{ width: '100%' }}>
                                         Регионы
                                     </TableCell>
-
+                                    <TableCell sx={{
+                                        minWidth: '220px',
+                                        p: '16px 10px',
+                                    }}>
+                                        <Grid sx={{
+                                            ml: 'auto'
+                                        }}>
+                                            <Button
+                                                size="large"
+                                                aria-label="account of current user"
+                                                aria-controls="menu-appbar"
+                                                aria-haspopup="true"
+                                                // onClick={handleMenu}
+                                                color="secondary"
+                                                variant={"contained"}
+                                                onMouseEnter={()=>setHovered(true)}
+                                                onMouseLeave={()=>setHovered(false)}
+                                                sx={{
+                                                    width: hovered ? "100%" : '44px',
+                                                    height: '44px',
+                                                    minWidth: '0',
+                                                    p: "10px",
+                                                    borderRadius: '22px',
+                                                    position: 'relative',
+                                                    overflow: 'hidden',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    transition: 'width 200ms ease',
+                                                    marginLeft: 'auto',
+                                                    gap: '5px',
+                                                    '&:not(:hover)': {
+                                                        transitionDelay: '200ms',
+                                                    },
+                                                }}
+                                            >
+                                                <Typography sx={{
+                                                    color: hovered ? "inherit" : 'transparent',
+                                                    transition: '200ms',
+                                                    textWrap: 'nowrap',
+                                                    transitionDelay: hovered ? "0ms" : '200ms'
+                                                }}>
+                                                    Настроить поля
+                                                </Typography>
+                                                <SettingsIcon sx={{
+                                                    position: 'sticky',
+                                                    right: '0',
+                                                }}/>
+                                            </Button>
+                                            </Grid>
+                                    </TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
