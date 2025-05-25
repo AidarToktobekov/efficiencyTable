@@ -5,8 +5,8 @@ import {
     Collapse,
     Container,
     Grid,
-    IconButton,
-    Paper,
+    IconButton, ListItem,
+    Paper, Popover,
     Table,
     TableBody,
     TableCell,
@@ -14,7 +14,8 @@ import {
     TableHead,
     TableRow,
     TextField,
-    Typography
+    Typography,
+    List, ListItemButton, ListItemIcon, Checkbox, ListItemText
 } from "@mui/material";
 import React, {useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.js";
@@ -24,6 +25,15 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Logo from "../../../public/logo.png";
 import EfficiencyTableItem from "../../Components/EfficiencyTableItem/EfficiencyTableItem.jsx";
 import SettingsIcon from '@mui/icons-material/Settings';
+import HandymanIcon from '@mui/icons-material/Handyman';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import CheckIcon from '@mui/icons-material/Check';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
+import PercentIcon from '@mui/icons-material/Percent';
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Efficiency = ()=>{
 
@@ -35,6 +45,35 @@ const Efficiency = ()=>{
         createdAt: null,
         finishedAt: null,
     });
+
+    const [tableCells, setTableCells] = useState({
+        workTypes: true,
+        physicalForce: true,
+        oneDayNorm: true,
+        requestDaysNorm: true,
+        createdTechpods: true,
+        pointsSum: true,
+        efficiency: true,
+    });
+
+    const handleToggle = (name)=>{
+        setTableCells(prev=>({
+            ...prev,
+            [name]: !tableCells[name]
+        }))
+    }
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const openSettingFields = Boolean(anchorEl);
+    const id = openSettingFields ? 'simple-popover' : undefined;
 
     const handleDateChange = (e)=>{
         const {value, name} = e.target;
@@ -60,7 +99,6 @@ const Efficiency = ()=>{
         "Талас": false,
         "Чуй": false,
     });
-
 
     return(
         <>
@@ -132,11 +170,11 @@ const Efficiency = ()=>{
                                             />
                                         </Grid>
                                     </TableCell>
-                                    <TableCell colSpan={2} sx={{ width: '100%' }}>
+                                    <TableCell sx={{ width: '100%' }}>
                                         Регионы
                                     </TableCell>
                                     <TableCell sx={{
-                                        minWidth: '220px',
+                                        minWidth: '230px',
                                         p: '16px 10px',
                                     }}>
                                         <Grid sx={{
@@ -147,13 +185,13 @@ const Efficiency = ()=>{
                                                 aria-label="account of current user"
                                                 aria-controls="menu-appbar"
                                                 aria-haspopup="true"
-                                                // onClick={handleMenu}
-                                                color="secondary"
-                                                variant={"contained"}
+                                                onClick={handleClick}
+                                                color="primary"
+                                                variant={"text"}
                                                 onMouseEnter={()=>setHovered(true)}
                                                 onMouseLeave={()=>setHovered(false)}
                                                 sx={{
-                                                    width: hovered ? "100%" : '44px',
+                                                    width: (hovered || anchorEl) ? "100%" : '44px',
                                                     height: '44px',
                                                     minWidth: '0',
                                                     p: "10px",
@@ -162,27 +200,280 @@ const Efficiency = ()=>{
                                                     overflow: 'hidden',
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    transition: 'width 200ms ease',
+                                                    transition: 'width 200ms ease, background 200ms ease',
                                                     marginLeft: 'auto',
                                                     gap: '5px',
+                                                    background: (hovered || anchorEl) ? "#fff" : 'transparent',
                                                     '&:not(:hover)': {
                                                         transitionDelay: '200ms',
                                                     },
                                                 }}
                                             >
                                                 <Typography sx={{
-                                                    color: hovered ? "inherit" : 'transparent',
+                                                    fontFamily: 'Jura, sans-serif',
+                                                    fontSize: '18px',
+                                                    fontWeight: '900',
+                                                    color: (hovered || anchorEl) ? "#000" : 'transparent',
                                                     transition: '200ms',
                                                     textWrap: 'nowrap',
-                                                    transitionDelay: hovered ? "0ms" : '200ms'
+                                                    transitionDelay: (hovered || anchorEl) ? "0ms" : '200ms'
                                                 }}>
                                                     Настроить поля
                                                 </Typography>
                                                 <SettingsIcon sx={{
                                                     position: 'sticky',
                                                     right: '0',
+                                                    fontSize: '30px',
+                                                    color: (hovered || anchorEl) ? "#000" : '#fff',
+                                                    transition: 'color 400ms ease',
                                                 }}/>
                                             </Button>
+                                            <Popover
+                                                id={id}
+                                                open={openSettingFields}
+                                                anchorEl={anchorEl}
+                                                onClose={handleClose}
+                                                anchorOrigin={{
+                                                    vertical: 'bottom',
+                                                    horizontal: 'left',
+                                                }}
+                                                PaperProps={{
+                                                    sx: {
+                                                        background: '#f2f5fa'
+                                                    }
+                                                }}
+                                            >
+                                                <List>
+                                                    <ListItem disablePadding
+                                                    >
+                                                        <ListItemButton role={undefined} onClick={()=>handleToggle("workTypes")} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox
+                                                                    edge="start"
+                                                                    checked={tableCells.workTypes}
+                                                                    tabIndex={-1}
+                                                                    disableRipple
+                                                                    // inputProps={{ 'aria-labelledby': labelId }}
+                                                                />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={"Типы работ"}
+                                                                          primaryTypographyProps={{
+                                                                              fontSize: '20px',
+                                                                              fontWeight: '900',
+                                                                              fontFamily: 'Jura, sans-serif',
+                                                                          }}
+                                                            />
+                                                            <ListItemIcon sx={{
+                                                                justifyContent: "end",
+                                                            }}>
+                                                                <FormatListNumberedRtlIcon sx={{
+                                                                    fontSize: '30px',
+                                                                    color: tableCells.workTypes ? '#008cff' : 'inherit',
+                                                                }}/>
+                                                            </ListItemIcon>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                    <ListItem disablePadding
+                                                    >
+                                                        <ListItemButton role={undefined} onClick={()=>handleToggle("physicalForce")} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox
+                                                                    edge="start"
+                                                                    checked={tableCells.physicalForce}
+                                                                    tabIndex={-1}
+                                                                    disableRipple
+                                                                />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={"Физ силы"}
+                                                                          primaryTypographyProps={{
+                                                                              fontSize: '20px',
+                                                                              fontWeight: '900',
+                                                                              fontFamily: 'Jura, sans-serif',
+                                                                          }}
+                                                            />
+                                                            <ListItemIcon sx={{
+                                                                justifyContent: "end"
+                                                            }}>
+                                                                <PeopleAltIcon sx={{
+                                                                    fontSize: '30px',
+                                                                    color: tableCells.physicalForce ? '#008cff' : 'inherit',
+                                                                }}/>
+                                                            </ListItemIcon>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                    <ListItem disablePadding>
+                                                        <ListItemButton role={undefined} onClick={()=>handleToggle("oneDayNorm")} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox
+                                                                    edge="start"
+                                                                    checked={tableCells.oneDayNorm}
+                                                                    tabIndex={-1}
+                                                                    disableRipple
+                                                                />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={"Норма дней"}
+                                                                          primaryTypographyProps={{
+                                                                              fontSize: '20px',
+                                                                              fontWeight: '900',
+                                                                              fontFamily: 'Jura, sans-serif',
+                                                                          }}
+                                                            />
+                                                            <ListItemIcon sx={{
+                                                                justifyContent: "end"
+                                                            }}>
+                                                                <CheckIcon sx={{
+                                                                    fontSize: '30px',
+                                                                    color: tableCells.oneDayNorm ? '#008cff' : 'inherit',
+                                                                }}/>
+                                                            </ListItemIcon>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                    <ListItem disablePadding>
+                                                        <ListItemButton role={undefined} onClick={()=>handleToggle("requestDaysNorm")} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox
+                                                                    edge="start"
+                                                                    checked={tableCells.requestDaysNorm}
+                                                                    tabIndex={-1}
+                                                                    disableRipple
+ч                                                                />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={"Норма за период"}
+                                                                          primaryTypographyProps={{
+                                                                              fontSize: '20px',
+                                                                              fontWeight: '900',
+                                                                              fontFamily: 'Jura, sans-serif',
+                                                                          }}
+                                                            />
+                                                            <ListItemIcon sx={{
+                                                                justifyContent: "end"
+                                                            }}>
+                                                                <DoneAllIcon sx={{
+                                                                    fontSize: '30px',
+                                                                    color: tableCells.requestDaysNorm ? '#008cff' : 'inherit',
+                                                                }}/>
+                                                            </ListItemIcon>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                    <ListItem disablePadding>
+                                                        <ListItemButton role={undefined} onClick={()=>handleToggle("createdTechpods")} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox
+                                                                    edge="start"
+                                                                    checked={tableCells.createdTechpods}
+                                                                    tabIndex={-1}
+                                                                    disableRipple
+                                                                />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={"Кол-во техподов"}
+                                                                          primaryTypographyProps={{
+                                                                              fontSize: '20px',
+                                                                              fontWeight: '900',
+                                                                              fontFamily: 'Jura, sans-serif',
+                                                                          }}
+                                                            />
+                                                            <ListItemIcon sx={{
+                                                                justifyContent: "end"
+                                                            }}>
+                                                                <HandymanIcon sx={{
+                                                                    fontSize: '30px',
+                                                                    color: tableCells.createdTechpods ? '#008cff' : 'inherit',
+                                                                }}/>
+                                                            </ListItemIcon>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                    <ListItem disablePadding>
+                                                        <ListItemButton role={undefined} onClick={()=>handleToggle("pointsSum")} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox
+                                                                    edge="start"
+                                                                    checked={tableCells.pointsSum}
+                                                                    tabIndex={-1}
+                                                                    disableRipple
+                                                                />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={"Сумма баллов"}
+                                                                          primaryTypographyProps={{
+                                                                              fontSize: '20px',
+                                                                              fontWeight: '900',
+                                                                              fontFamily: 'Jura, sans-serif',
+                                                                          }}
+                                                            />
+                                                            <ListItemIcon sx={{
+                                                                justifyContent: "end"
+                                                            }}>
+                                                                <EqualizerIcon sx={{
+                                                                    fontSize: '30px',
+                                                                    color: tableCells.pointsSum ? '#008cff' : 'inherit',
+                                                                }}/>
+                                                            </ListItemIcon>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                    <ListItem disablePadding>
+                                                        <ListItemButton role={undefined} onClick={()=>handleToggle("efficiency")} dense>
+                                                            <ListItemIcon>
+                                                                <Checkbox
+                                                                    edge="start"
+                                                                    checked={tableCells.efficiency}
+                                                                    tabIndex={-1}
+                                                                    disableRipple
+                                                                />
+                                                            </ListItemIcon>
+                                                            <ListItemText primary={"Эффективность"}
+                                                                          primaryTypographyProps={{
+                                                                              fontSize: '20px',
+                                                                              fontWeight: '900',
+                                                                              fontFamily: 'Jura, sans-serif',
+                                                                          }}
+                                                            />
+                                                            <ListItemIcon sx={{
+                                                                justifyContent: "end"
+                                                            }}>
+                                                                <PercentIcon sx={{
+                                                                    fontSize: '30px',
+                                                                    color: tableCells.efficiency ? '#008cff' : 'inherit',
+                                                                }}/>
+                                                            </ListItemIcon>
+                                                        </ListItemButton>
+                                                    </ListItem>
+                                                </List>
+                                                <Grid container gap={1} p={1} justifyContent={"center"}>
+                                                    <Button color={"primary"} variant={"contained"} onClick={()=>{
+                                                        setTableCells(prev=>({
+                                                            workTypes: true,
+                                                            physicalForce: true,
+                                                            oneDayNorm: true,
+                                                            requestDaysNorm: true,
+                                                            createdTechpods: true,
+                                                            pointsSum: true,
+                                                            efficiency: true,
+                                                        }));
+                                                    }} sx={{
+                                                        flexGrow: "2",
+                                                    }}>
+                                                        <ChecklistIcon sx={{
+                                                            fontSize: '35px'
+                                                        }}/>
+                                                    </Button>
+                                                    <Button color={"error"} variant={"contained"} onClick={()=>{
+                                                        setTableCells(prev=>({
+                                                            workTypes: false,
+                                                            physicalForce: false,
+                                                            oneDayNorm: false,
+                                                            requestDaysNorm: false,
+                                                            createdTechpods: false,
+                                                            pointsSum: false,
+                                                            efficiency: false,
+                                                        }));
+                                                    }} sx={{
+                                                        flexGrow: "2",
+                                                    }}>
+                                                        <DeleteIcon sx={{
+                                                            fontSize: '35px'
+                                                        }}/>
+                                                    </Button>
+                                                </Grid>
+                                            </Popover>
                                             </Grid>
                                     </TableCell>
                                 </TableRow>
@@ -190,7 +481,7 @@ const Efficiency = ()=>{
                             <TableBody>
                                 {regionEfficiencyError ?
                                     <TableRow>
-                                        <TableCell colSpan={2}>
+                                        <TableCell colSpan={3}>
                                             <Alert variant="standard" severity="error" sx={{
                                                 justifyContent: 'center',
                                             }}>
@@ -224,7 +515,7 @@ const Efficiency = ()=>{
                                                         </IconButton>
                                                     </Grid>
                                                 </TableCell>
-                                                <TableCell colSpan={2} component="th" scope="row" sx={{ width: '100%', fontFamily: 'Jura', fontWeight: "bold", textAlign: "center", fontSize: "20px" }}>
+                                                <TableCell colSpan={3} component="th" scope="row" sx={{ width: '100%', fontFamily: 'Jura', fontWeight: "bold", textAlign: "center", fontSize: "20px" }}>
                                                     {efficiency.region}
                                                 </TableCell>
                                             </TableRow>
@@ -264,39 +555,54 @@ const Efficiency = ()=>{
                                                                         <TableCell>
                                                                             Квадрат
                                                                         </TableCell>
-                                                                        <TableCell>
-                                                                            Типы работ
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            Физ силы
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            Норма дня
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            Норма
-                                                                            <Typography sx={{
-                                                                                fontSize: "14px",
-                                                                                minWidth: '100px',
-                                                                                marginTop: '5px'
-                                                                            }}>
-                                                                            с: {dates.createdAt}<br/>по: {dates.finishedAt}
-                                                                            </Typography>
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            Кол-во техподов
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            Сумма баллов
-                                                                        </TableCell>
-                                                                        <TableCell>
-                                                                            Эффективность
-                                                                        </TableCell>
+                                                                        {tableCells.workTypes &&
+                                                                            <TableCell>
+                                                                                Типы работ
+                                                                            </TableCell>
+                                                                        }
+                                                                        {tableCells.physicalForce &&
+                                                                            <TableCell>
+                                                                                Физ силы
+                                                                            </TableCell>
+                                                                        }
+                                                                        {tableCells.oneDayNorm &&
+                                                                            <TableCell>
+                                                                                Норма дня
+                                                                            </TableCell>
+                                                                        }
+                                                                        {tableCells.requestDaysNorm &&
+                                                                            <TableCell>
+                                                                                Норма
+                                                                                <Typography sx={{
+                                                                                    fontSize: "14px",
+                                                                                    minWidth: '100px',
+                                                                                    marginTop: '5px'
+                                                                                }}>
+                                                                                с: {dates.createdAt}<br/>по: {dates.finishedAt}
+                                                                                </Typography>
+                                                                            </TableCell>
+                                                                        }
+                                                                        {tableCells.createdTechpods &&
+                                                                            <TableCell>
+                                                                                Кол-во техподов
+                                                                            </TableCell>
+                                                                        }
+                                                                        {tableCells.pointsSum &&
+                                                                            <TableCell>
+                                                                                Сумма баллов
+                                                                            </TableCell>
+                                                                        }
+                                                                        {tableCells.efficiency &&
+                                                                            <TableCell>
+                                                                                Эффективность
+                                                                            </TableCell>
+                                                                        }
                                                                     </TableRow>
                                                                 </TableHead>
                                                                 <TableBody>
                                                                     {efficiency.squares.map((square, i) => (
                                                                         <EfficiencyTableItem
+                                                                            tableCells={tableCells}
                                                                             createdTechpods={square.data.created_techpods}
                                                                             daysCount={regionEfficiency.date}
                                                                             key={i}

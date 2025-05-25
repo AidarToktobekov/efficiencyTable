@@ -13,7 +13,7 @@ const NORM_BY_FORCE = {
     8: 14
 };
 
-const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNorm, requestDaysNorm, pointsSum, createdTechpods})=>{
+const EfficiencyTableItem = ({ tableCells, daysCount, square, works, physicalForce, oneDayNorm, requestDaysNorm, pointsSum, createdTechpods})=>{
 
     const [countSI, setCountSI] = useState(0);
     const [dayNorm, setDayNorm] = useState(0);
@@ -54,211 +54,225 @@ const EfficiencyTableItem = ({ daysCount, square, works, physicalForce, oneDayNo
                     {square}
                 </Grid>
             </TableCell>
-            <TableCell align={"center"} sx={{
-                border: '1px solid #ddd',
-                fontFamily: 'Jura',
-                fontWeight: '900',
-                fontSize: '18px'
-            }}>
-                <Grid sx={{
-                    background: '#fff',
-                    borderRadius: '10px',
+            {tableCells.workTypes &&
+                <TableCell align={"center"} sx={{
+                    border: '1px solid #ddd',
+                    fontFamily: 'Jura',
+                    fontWeight: '900',
+                    fontSize: '18px'
                 }}>
-                    <List sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
+                    <Grid sx={{
+                        background: '#fff',
+                        borderRadius: '10px',
                     }}>
-                        {works.map((work, i)=>(
-                            <ListItem key={i} sx={{
-                                width: '100%',
-                                display: 'flex',
-                                height: '45px',
-                                maxWidth: '230px',
-                                "& > div": {
+                        <List sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}>
+                            {works.map((work, i)=>(
+                                <ListItem key={i} sx={{
+                                    width: '100%',
                                     display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }
-                            }}
-                            >
-                                <Grid sx={{
-                                    p: '0 5px',
-                                    flexGrow: '1',
-                                    fontSize: '14px',
-                                    height: '100%',
-                                    background: 'rgba(255,204,204,0.87)',
-                                    maxWidth: '140px',
-                                    width: 'max-content',
-                                    borderRadius: '5px 0 0 5px',
-                                }}>
-                                    {work.work_type}
-                                </Grid>
-                                <Grid sx={{
-                                    minWidth: '40px',
-                                    height: '100%',
-                                    p: '0 5px',
-                                    borderRadius: '0 5px 5px 0',
-                                    background: 'rgba(217,204,255,0.87)'
-                                }}>
-                                    {work.amount}
-                                </Grid>
-                            </ListItem>
-                        ))}
-                    </List>
-                </Grid>
-            </TableCell>
-            <TableCell align={"center"} sx={{
-                border: '1px solid #ddd',
-                fontFamily: 'Jura',
-                fontWeight: '900',
-                fontSize: '18px'
-            }}>
-                <Grid sx={{
-                    background: '#fff',
-                    borderRadius: '10px',
-                    p: 1,
+                                    height: '45px',
+                                    maxWidth: '230px',
+                                    "& > div": {
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }
+                                }}
+                                >
+                                    <Grid sx={{
+                                        p: '0 5px',
+                                        flexGrow: '1',
+                                        fontSize: '14px',
+                                        height: '100%',
+                                        background: 'rgba(255,204,204,0.87)',
+                                        maxWidth: '140px',
+                                        width: 'max-content',
+                                        borderRadius: '5px 0 0 5px',
+                                    }}>
+                                        {work.work_type}
+                                    </Grid>
+                                    <Grid sx={{
+                                        minWidth: '40px',
+                                        height: '100%',
+                                        p: '0 5px',
+                                        borderRadius: '0 5px 5px 0',
+                                        background: 'rgba(217,204,255,0.87)'
+                                    }}>
+                                        {work.amount}
+                                    </Grid>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Grid>
+                </TableCell>
+            }
+            {tableCells.physicalForce &&
+                <TableCell align={"center"} sx={{
+                    border: '1px solid #ddd',
+                    fontFamily: 'Jura',
+                    fontWeight: '900',
+                    fontSize: '18px'
                 }}>
-                    <TextField type={"number"} inputProps={{min: 1, max: 8, sx: {
-                            padding: '5px 10px',
-                            width: '30px',
-                        }}}
-                        value={countSI}
-                        onChange={(e)=>{setCountSI(e.target.value)}}
-                        sx={{
-                            p: 1,
-                        }}
-                        />
-                </Grid>
-            </TableCell>
-            <TableCell align={"center"} sx={{
-                border: '1px solid #ddd',
-                fontFamily: 'Jura',
-                fontWeight: '900',
-                fontSize: '18px'
-            }}>
-                <Grid sx={{
-                    background: '#fff',
-                    borderRadius: '10px',
-                    p: 1,
-                }}>
-                    {dayNorm}
-                </Grid>
-            </TableCell>
-            <TableCell align={"center"} sx={{
-                border: '1px solid #ddd',
-                fontFamily: 'Jura',
-                fontWeight: '900',
-                fontSize: '18px'
-            }}>
-                <Grid sx={{
-                    background: '#fff',
-                    borderRadius: '10px',
-                    p: 1,
-                }}>
-                    {daysNorm}
-                </Grid>
-            </TableCell>
-            <TableCell align={"center"} sx={{
-                border: '1px solid #ddd',
-                fontFamily: 'Jura',
-                fontWeight: '900',
-                fontSize: '18px'
-            }}>
-                <Grid sx={{
-                    background: '#fff',
-                    borderRadius: '10px',
-                    p: 1,
-                }}>
-                    {createdTechpods}
-                </Grid>
-            </TableCell>
-            <TableCell align={"center"} sx={{
-                border: '1px solid #ddd',
-                fontFamily: 'Jura',
-                fontWeight: '900',
-                fontSize: '18px'
-            }}>
-                <Grid sx={{
-                    background: '#fff',
-                    borderRadius: '10px',
-                    p: 1,
-                }}>
-                    {pointsSum}
-                </Grid>
-            </TableCell>
-            <TableCell align={"center"} sx={{
-                border: '1px solid #ddd',
-            }}>
-                <Grid sx={{
-                    width: '120px',
-                    height: '120px',
-                    background: '#fff',
-                    borderRadius: '10px',
-                    position: 'relative',
-                    margin: "0 auto"
-                }}>
-                    <Typography sx={{
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        transform: "translate(-50%, -50%)",
-                        fontFamily: 'Jura',
-                        fontWeight: '900',
-                        fontSize: '18px',
-                        color: efficiencyPercentage > 60 ?
-                            efficiencyPercentage > 80 ?
-                                efficiencyPercentage > 90 ?
-                                    "#00b30f" : "#ff8f00"
-                                : "#efc700"
-                            : '#ff0000',
+                    <Grid sx={{
+                        background: '#fff',
+                        borderRadius: '10px',
+                        p: 1,
                     }}>
-                        {efficiencyPercentage}%
-                    </Typography>
-                    <ResponsivePie
-                        data={[
-                            {
-                                "id": "green", "label": "Эффективность", "value": efficiencyPercentage,
-                            }, {
-                            "id": "red", "label": "", "value": 100 - efficiencyPercentage,
-                            },
-                        ]}
-                        colors={['#1DBF12', '#E31A1A']}
-                        margin={{ top: 15, right: 0, bottom: 15, left: 0 }}
-                        height={120}
-                        innerRadius={0.6}
-                        cornerRadius={3}
-                        activeOuterRadiusOffset={8}
-                        arcLabelsTextColor='#FFFFFF'
-                        enableArcLabels={false}
-                        enableArcLinkLabels={false}
-                        tooltip={() => <div></div>}
-                        defs={[
-                            {
-                                id: 'lines',
-                                type: 'patternLines',
-                                background: 'inherit',
-                                color: 'rgba(255, 255, 255, 0.3)',
-                                rotation: -45,
-                                lineWidth: 6,
-                                spacing: 10
-                            }
+                        <TextField type={"number"} inputProps={{min: 1, max: 8, sx: {
+                                padding: '5px 10px',
+                                width: '30px',
+                            }}}
+                            value={countSI}
+                            onChange={(e)=>{setCountSI(e.target.value)}}
+                            sx={{
+                                p: 1,
+                            }}
+                            />
+                    </Grid>
+                </TableCell>
+            }
+            {tableCells.oneDayNorm &&
+                <TableCell align={"center"} sx={{
+                    border: '1px solid #ddd',
+                    fontFamily: 'Jura',
+                    fontWeight: '900',
+                    fontSize: '18px'
+                }}>
+                    <Grid sx={{
+                        background: '#fff',
+                        borderRadius: '10px',
+                        p: 1,
+                    }}>
+                        {dayNorm}
+                    </Grid>
+                </TableCell>
+            }
+            {tableCells.requestDaysNorm &&
+                <TableCell align={"center"} sx={{
+                    border: '1px solid #ddd',
+                    fontFamily: 'Jura',
+                    fontWeight: '900',
+                    fontSize: '18px'
+                }}>
+                    <Grid sx={{
+                        background: '#fff',
+                        borderRadius: '10px',
+                        p: 1,
+                    }}>
+                        {daysNorm}
+                    </Grid>
+                </TableCell>
+            }
+            {tableCells.createdTechpods &&
+                <TableCell align={"center"} sx={{
+                    border: '1px solid #ddd',
+                    fontFamily: 'Jura',
+                    fontWeight: '900',
+                    fontSize: '18px'
+                }}>
+                    <Grid sx={{
+                        background: '#fff',
+                        borderRadius: '10px',
+                        p: 1,
+                    }}>
+                        {createdTechpods}
+                    </Grid>
+                </TableCell>
+            }
+            {tableCells.pointsSum &&
+                <TableCell align={"center"} sx={{
+                    border: '1px solid #ddd',
+                    fontFamily: 'Jura',
+                    fontWeight: '900',
+                    fontSize: '18px'
+                }}>
+                    <Grid sx={{
+                        background: '#fff',
+                        borderRadius: '10px',
+                        p: 1,
+                    }}>
+                        {pointsSum}
+                    </Grid>
+                </TableCell>
+            }
+            {tableCells.efficiency &&
+                <TableCell align={"center"} sx={{
+                    border: '1px solid #ddd',
+                }}>
+                    <Grid sx={{
+                        width: '120px',
+                        height: '120px',
+                        background: '#fff',
+                        borderRadius: '10px',
+                        position: 'relative',
+                        margin: "0 auto"
+                    }}>
+                        <Typography sx={{
+                            position: 'absolute',
+                            left: '50%',
+                            top: '50%',
+                            transform: "translate(-50%, -50%)",
+                            fontFamily: 'Jura',
+                            fontWeight: '900',
+                            fontSize: '18px',
+                            color: efficiencyPercentage > 60 ?
+                                efficiencyPercentage > 80 ?
+                                    efficiencyPercentage > 90 ?
+                                        "#00b30f" : "#ff8f00"
+                                    : "#efc700"
+                                : '#ff0000',
+                        }}>
+                            {efficiencyPercentage}%
+                        </Typography>
+                        <ResponsivePie
+                            data={[
+                                {
+                                    "id": "green", "label": "Эффективность", "value": efficiencyPercentage,
+                                }, {
+                                "id": "red", "label": "", "value": 100 - efficiencyPercentage,
+                                },
                             ]}
-                        fill={[{
-                            match: {
-                                id: 'green'
-                            },
-                            id: 'lines'
-                        },
-                            {
+                            colors={['#1DBF12', '#E31A1A']}
+                            margin={{ top: 15, right: 0, bottom: 15, left: 0 }}
+                            height={120}
+                            innerRadius={0.6}
+                            cornerRadius={3}
+                            activeOuterRadiusOffset={8}
+                            arcLabelsTextColor='#FFFFFF'
+                            enableArcLabels={false}
+                            enableArcLinkLabels={false}
+                            tooltip={() => <div></div>}
+                            defs={[
+                                {
+                                    id: 'lines',
+                                    type: 'patternLines',
+                                    background: 'inherit',
+                                    color: 'rgba(255, 255, 255, 0.3)',
+                                    rotation: -45,
+                                    lineWidth: 6,
+                                    spacing: 10
+                                }
+                                ]}
+                            fill={[{
                                 match: {
-                                    id: 'red'
+                                    id: 'green'
                                 },
                                 id: 'lines'
                             },
-                        ]}
-                    />
-                </Grid>
-            </TableCell>
+                                {
+                                    match: {
+                                        id: 'red'
+                                    },
+                                    id: 'lines'
+                                },
+                            ]}
+                        />
+                    </Grid>
+                </TableCell>
+            }
         </TableRow>
     );
 };
