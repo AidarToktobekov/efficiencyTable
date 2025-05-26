@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "format": "prettier --write .",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -17,9 +18,12 @@
     "@mui/material": "^7.0.2",
     "@mui/x-charts": "^7.28.0",
     "@mui/x-data-grid": "^7.28.3",
+    "@mui/x-date-pickers": "^8.4.0",
+    "@mui/x-date-pickers-pro": "^8.4.0",
     "@nivo/pie": "^0.88.0",
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.8.4",
+    "dayjs": "^1.11.13",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
@@ -36,6 +40,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "prettier": "^3.5.3",
     "vite": "^6.2.6"
   }
 }

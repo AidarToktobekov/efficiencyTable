@@ -3,12 +3,12 @@ import { login } from './userThunk';
 
 const initialState = {
   user: {
-    username: "aidar",
-    name: "Aidar",
-    role: "admin",
+    username: 'aidar',
+    name: 'Aidar',
+    role: 'admin',
     sip: 90,
-    phone_number: "3231",
-    token: "213",
+    phone_number: '3231',
+    token: '213',
   },
   loginLoading: false,
   loginError: null,
@@ -48,13 +48,10 @@ const UsersSlice = createSlice({
     selectUser: (state) => state.user,
     selectLoginLoading: (state) => state.loginLoading,
     selectLoginError: (state) => state.loginError,
-  }
+  },
 });
 
 export const userReducer = UsersSlice.reducer;
-export const {
-  selectUser,
-  selectLoginLoading,
-  selectLoginError,
-} = UsersSlice.selectors;
+export const { selectUser, selectLoginLoading, selectLoginError } =
+  UsersSlice.selectors;
 export const { logout } = UsersSlice.actions;

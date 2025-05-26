@@ -40,6 +40,23 @@
   --nav-hover: rgba(24, 45, 117, 0.05);
   --users-bg: rgba(248, 247, 255, 1);
   --user-hover-bg: rgba(237, 235, 255, 1);
+  --primary: #345976;
+  --background: #f4f4f2;
+  --lightest: #f3f2f1;
+  --surface: #ffffff;
+  --light: #bfbfbf;
+  --hard: #8f8f8f;
+  --secondary: #f4f7fe;
+  --hardest: #606060;
+  --red-main: #e31a1a;
+  --green-main: #1dbf12;
+  --warning: #fca21c;
+  --info: #1cb9fc;
+  --blue-secondary: #9aacbb;
+  --green-secondary: #d2f2d0;
+  --purple-secondary: #d9d1ff;
+  --red-secondary: #f6dede;
+  --purple-main: #4318ff;
 }
 
 *,
