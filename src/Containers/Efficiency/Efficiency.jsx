@@ -22,10 +22,14 @@ import {
   ListItemIcon,
   Checkbox,
   ListItemText,
+  Autocomplete,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.js';
-import { getRegionEfficiency } from '../../features/efficiency/efficiencyThunk.js';
+import {
+  getRegionEfficiency,
+  getSquares,
+} from '../../features/efficiency/efficiencyThunk.js';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Logo from '../../../public/logo.png';
@@ -48,10 +52,16 @@ import dayjs from 'dayjs';
 
 const Efficiency = () => {
   const dispatch = useAppDispatch();
-  const { regionEfficiency, regionEfficiencyLoading, regionEfficiencyError } =
-    useAppSelector((state) => state.efficiency);
+  const {
+    regionEfficiency,
+    regionEfficiencyLoading,
+    regionEfficiencyError,
+    squares,
+    squaresLoading,
+  } = useAppSelector((state) => state.efficiency);
   const [hovered, setHovered] = useState(false);
   const [dates, setDate] = useState([dayjs(new Date()), dayjs(new Date())]);
+  const [square, setSquare] = useState(null);
 
   const [tableCells, setTableCells] = useState({
     workTypes: true,
@@ -62,6 +72,10 @@ const Efficiency = () => {
     pointsSum: true,
     efficiency: true,
   });
+
+  useEffect(() => {
+    dispatch(getSquares());
+  }, [dispatch]);
 
   const handleToggle = (name) => {
     setTableCells((prev) => ({
@@ -85,7 +99,7 @@ const Efficiency = () => {
   const searchEfficiency = (e) => {
     e.preventDefault();
     try {
-      dispatch(getRegionEfficiency(dates));
+      dispatch(getRegionEfficiency({ date: dates, square: square }));
     } catch (e) {
       console.log(e);
     }
@@ -93,10 +107,10 @@ const Efficiency = () => {
   const [open, setOpen] = useState({
     'Джалал-Абад': false,
     'Иссык-Куль': false,
-    Нарын: false,
-    Ош: false,
-    Талас: false,
-    Чуй: false,
+    "Нарын": false,
+    "Ош": false,
+    "Талас": false,
+    "Чуй": false,
   });
 
   return (
@@ -165,6 +179,36 @@ const Efficiency = () => {
                 />
               </LocalizationProvider>
             </Box>
+
+            <Autocomplete
+              size="small"
+              disablePortal
+              options={squares}
+              sx={{ width: 300, height: '72px' }}
+              loading={squaresLoading}
+              onChange={(e, value) => {
+                setSquare(value.id);
+              }}
+              getOptionLabel={(item) => item.squares}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Квадрат"
+                  variant="outlined"
+                  sx={{
+                    '& .MuiInputBase-root': {
+                      height: '72px',
+                    },
+                    '& label': {
+                      marginTop: '14px',
+                    },
+                    '& label.Mui-focused': {
+                      marginTop: '0',
+                    },
+                  }}
+                />
+              )}
+            />
 
             <Button
               loading={regionEfficiencyLoading}
@@ -589,7 +633,7 @@ const Efficiency = () => {
                             color={'primary'}
                             variant={'contained'}
                             onClick={() => {
-                              setTableCells((prev) => ({
+                              setTableCells({
                                 workTypes: true,
                                 physicalForce: true,
                                 oneDayNorm: true,
@@ -597,7 +641,7 @@ const Efficiency = () => {
                                 createdTechpods: true,
                                 pointsSum: true,
                                 efficiency: true,
-                              }));
+                              });
                             }}
                             sx={{
                               flexGrow: '2',
@@ -613,7 +657,7 @@ const Efficiency = () => {
                             color={'error'}
                             variant={'contained'}
                             onClick={() => {
-                              setTableCells((prev) => ({
+                              setTableCells({
                                 workTypes: false,
                                 physicalForce: false,
                                 oneDayNorm: false,
@@ -621,7 +665,7 @@ const Efficiency = () => {
                                 createdTechpods: false,
                                 pointsSum: false,
                                 efficiency: false,
-                              }));
+                              });
                             }}
                             sx={{
                               flexGrow: '2',
@@ -645,7 +689,7 @@ const Efficiency = () => {
                     <TableCell colSpan={3}>
                       <Alert
                         variant="standard"
-                        severity="error"
+                        severity={regionEfficiencyError.status}
                         sx={{
                           justifyContent: 'center',
                         }}
@@ -777,9 +821,9 @@ const Efficiency = () => {
                                             marginTop: '5px',
                                           }}
                                         >
-                                          с: {dates.createdAt}
+                                          с: {dates[0].format('DD-MM-YYYY')}
                                           <br />
-                                          по: {dates.finishedAt}
+                                          по: {dates[1].format('DD-MM-YYYY')}
                                         </Typography>
                                       </TableCell>
                                     )}
@@ -814,6 +858,7 @@ const Efficiency = () => {
                                       }
                                       physicalForce={square.data.physical_force}
                                       pointsSum={square.data.points_sum}
+                                      consumables={square.data.consumables}
                                     />
                                   ))}
                                 </TableBody>

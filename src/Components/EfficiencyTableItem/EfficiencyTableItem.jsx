@@ -31,10 +31,12 @@ const EfficiencyTableItem = ({
   requestDaysNorm,
   pointsSum,
   createdTechpods,
+  consumables,
 }) => {
   const [countSI, setCountSI] = useState(0);
   const [dayNorm, setDayNorm] = useState(0);
   const [daysNorm, setDaysNorm] = useState(0);
+  const [consumablesPoints, setConsumablesPoints] = useState(0);
   const [efficiencyPercentage, setEfficiencyPercentage] = useState(0);
 
   useEffect(() => {}, [physicalForce]);
@@ -43,7 +45,25 @@ const EfficiencyTableItem = ({
     setCountSI(physicalForce);
     setDayNorm(oneDayNorm);
     setDaysNorm(requestDaysNorm);
-  }, [physicalForce, oneDayNorm, requestDaysNorm]);
+    if (!!Object.keys(consumables).length) {
+      setConsumablesPoints(() => {
+        const dropCable = consumables.drop_cable / 10;
+        const adssCable = consumables.adss_cable / 6;
+        const mainCoupling = consumables.main_coupling / 0.05;
+        const subscriberCoupling = consumables.subscriber_coupling / 0.08;
+        const connectNode = consumables.connect_node / 0.01;
+
+        const consumablesPointsSum =
+          dropCable +
+          adssCable +
+          mainCoupling +
+          subscriberCoupling +
+          connectNode;
+
+        return Math.ceil((consumablesPointsSum / 5) * 0.035);
+      });
+    }
+  }, [physicalForce, oneDayNorm, requestDaysNorm, consumablesPoints]);
 
   useEffect(() => {
     setDayNorm(NORM_BY_FORCE[countSI]);
@@ -51,7 +71,9 @@ const EfficiencyTableItem = ({
   }, [countSI]);
 
   useEffect(() => {
-    setEfficiencyPercentage(Math.ceil((pointsSum / daysNorm) * 100));
+    setEfficiencyPercentage(
+      Math.ceil(((pointsSum + consumablesPoints) / daysNorm) * 100)
+    );
   }, [pointsSum, daysNorm]);
 
   return (
@@ -261,7 +283,7 @@ const EfficiencyTableItem = ({
               p: 1,
             }}
           >
-            {pointsSum}
+            {pointsSum + consumablesPoints}
           </Grid>
         </TableCell>
       )}
