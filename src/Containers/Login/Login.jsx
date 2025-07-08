@@ -9,13 +9,13 @@ import { login } from '../../features/user/userThunk.js';
 import {
   Alert,
   Avatar,
+  Button,
   Container,
   Grid,
   TextField,
   Typography,
 } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
-import { LoadingButton } from '@mui/lab';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -70,9 +70,7 @@ const Login = () => {
           bgcolor: deepPurple[500],
           m: '0 auto',
         }}
-      >
-        {/*<LockIcon style={{ color: 'white' }}/>*/}
-      </Avatar>
+      ></Avatar>
       <Typography
         component="h1"
         variant="h5"
@@ -84,20 +82,17 @@ const Login = () => {
         Вход в систему
       </Typography>
       <Grid container justifyContent="flex-end">
-        {!!error && error.message ? (
+        {error ? (
           <Alert severity="error" sx={{ width: '100%' }}>
-            {error?.message}
+            {error?.message || error?.detail}
           </Alert>
-        ) : (
-          <Alert severity="error" sx={{ width: '100%' }}>
-            {error?.detail}
-          </Alert>
-        )}
+        ) : null}
       </Grid>
       <TextField
         id="username"
         name="username"
         label="Имя пользователя"
+        autoComplete="username"
         variant="outlined"
         value={state?.username}
         onChange={onChange}
@@ -107,9 +102,10 @@ const Login = () => {
         }}
       />
       <TextField
-        id="username"
+        id="password"
         type="password"
         name="password"
+        autoComplete="current-password"
         label="Пароль"
         variant="outlined"
         value={state?.password}
@@ -119,7 +115,7 @@ const Login = () => {
           mt: 1,
         }}
       />
-      <LoadingButton
+      <Button
         type="submit"
         fullWidth
         variant="contained"
@@ -131,7 +127,7 @@ const Login = () => {
         loading={loading}
       >
         Логин
-      </LoadingButton>
+      </Button>
     </Container>
   );
 };
